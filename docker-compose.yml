@@ -1,12 +1,29 @@
 version: '3.1'
+
 services :
+
+  currency_db:
+    image: postgres:9.6.8-alpine
+    ports:
+      - "5431:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: currency_db
+      LC_ALL: C.UTF-8
+    restart: always
+
   shopee_test:
     tty: true
+    depends_on:
+      - currency_db
+    links:
+      - "currency_db:currency_db.co.xy"
     build:
       context: .
       dockerfile: ./Dockerfile
     volumes:
-      - ./:/root/go/src/app/Foreign-Currency-BE-Exercise
+      - ./:/root/go/src/Foreign-Currency-BE-Exercise
     ports:
       - "9000:9000"
     restart: always

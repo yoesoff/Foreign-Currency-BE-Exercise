@@ -7,7 +7,7 @@ RUN apt-get -y update && apt-get -y install build-essential vim wget git &&\
     tar -C /usr/local -xzf go1.10.3.linux-amd64.tar.gz &&\
     echo 'export PATH=$PATH:/usr/local/go/bin\nexport GOPATH=/root/go\nexport PATH=$PATH:/root/go/bin' >> /root/.bashrc 
 
-WORKDIR /root/go/src/app/Foreign-Currency-BE-Exercise
+WORKDIR /root/go/src/Foreign-Currency-BE-Exercise
 
 ENV GOROOT="/usr/local/go"
 ENV GOPATH="/root/go"
