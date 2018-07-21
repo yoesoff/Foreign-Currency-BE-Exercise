@@ -1,6 +1,8 @@
 package app
 
 import (
+	"Foreign-Currency-BE-Exercise/app/controllers"
+
 	"github.com/revel/revel"
 )
 
@@ -35,6 +37,8 @@ func init() {
 	// revel.OnAppStart(ExampleStartupScript)
 	// revel.OnAppStart(InitDB)
 	// revel.OnAppStart(FillCache)
+
+	revel.OnAppStart(controllers.InitDB)
 }
 
 // HeaderFilter adds common security headers
