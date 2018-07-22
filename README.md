@@ -14,7 +14,8 @@
 - List of exchange http://localhost:9000/api/exchanges [get]
 - Delete item http://localhost:9000/api/exchanges/:id/delete [delete]
 - Create item http://localhost:9000/api/exchanges [post]
-- Update item http://localhost:9000/api/exchanges/21/update [put]
+- Update item http://localhost:9000/api/exchanges/:id/update [put]
+- Get last 7 days http://localhost:9000/api/exchanges/pairlast7days/aaa/bbb [get] //Average taken/calculated fron this API
 - FYI, Both Create and Update are using normal form-data
 
 ## Simple GUI/Explorer to Browse your Data
