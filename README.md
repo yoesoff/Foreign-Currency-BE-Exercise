@@ -1,4 +1,4 @@
-# Minimum Requirement
+# Minimum Requirements
 - Docker version 18.03.1-ce, build
 - docker-compose version 1.19.0
 - docker-py version: 2.7.0
@@ -20,7 +20,7 @@
 ## Simple GUI/Explorer to Browse your Data
 - open http://localhost:9000/exchanges on your browser
 
-# Used Programming Techologies (Inside container)
+# Used Programming Technologies (Inside container)
 - go version go1.10.3 linux/amd64 
 - Revel Framework v0.19.0 (2018-02-06)
 - Gorm ORM for Go
@@ -28,10 +28,7 @@
 # Snapshot and Images
 - https://drive.google.com/drive/folders/1kzsCh5BKZHvjVVYlfANwdfWuCysaDG88?usp=sharing
 
-## microcontainer based on Alpine with working init process and glibc
-[![](https://images.microbadger.com/badges/image/nimmis/alpine-glibc.svg)](https://microbadger.com/images/nimmis/alpine-glibc "Get your own image badge on microbadger.com")
 
-This is a very small container (14 Mb) but still have glibc libraries,  a working init process, crond, syslog and logrotate. This is the base image for all my other microcontainers needing glibc
 
 
 # Welcome to Revel
