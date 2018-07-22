@@ -1,0 +1,176 @@
+{{set . "title" "Exchange list"}}
+{{template "header.html" .}}
+
+<header class="jumbotron" style="background-color:#A9F16C">
+  <div class="container">
+    <div class="row">
+      <h1>Stock Exchange</h1>
+      <p></p>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="span6">
+      {{template "flash.html" .}}
+    </div>
+  </div>
+</div>
+
+<div class="container">
+    <form id="new-currency" action="/exchanges" method="POST" class="form-horizontal">
+
+        <div class="row">
+            <div class="col-xs-6 col-sm-4 form-group form-group-sm">
+                <label class="col-sm-2 control-label" for="formGroupInputLarge">From</label>
+                <div class="col-sm-10">
+                    <input class="form-control currency" type="text" id="From" name="From" placeholder="Currency 1">
+                </div>
+            </div>
+
+            <div class="col-xs-6 col-sm-4 form-group form-group-sm">
+                <label class="col-sm-2 control-label" for="formGroupInputSmall">To</label>
+                <div class="col-sm-10">
+                    <input class="form-control currency" type="text" id="To" name="To" placeholder="Currency 2">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6 col-sm-4 form-group form-group-sm">
+                <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="Date" name="Date" placeholder="Date UTC">
+                </div>
+            </div>
+
+            <div class="col-xs-6 col-sm-4 form-group form-group-sm">
+                <label class="col-sm-2 control-label" for="formGroupInputSmall">Rate</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <div class="input-group-addon">$</div>
+                            <input type="text" class="form-control" id="Rate" name="Rate" placeholder="Rate">
+                        <div class="input-group-addon">.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-offset-10">
+                <button type="reset" class="btn btn-warning right">
+                    <i class="fa fa-plus"></i> Reset Form
+                </button>
+                <button type="submit" class="btn btn-success right">
+                    <i class="fa fa-plus"></i> Add Exchange
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <hr />
+    
+    <h2>Current Exchanges</h2>
+    <table class="table table-striped Exchange-table">
+        <thead>
+            <th>Id</th>
+            <th>Date</th>
+            <th>From</th>
+            <th>To</th>
+            <th>7-day avg</th>
+            <th>&nbsp;</th>
+        </thead>
+
+        <tbody>
+            {{ range .exchanges }}
+                <tr class="pairs" data-from="{{ .From }}" data-to="{{ .To }}" data-avg="avg{{ .Id }}">
+                    <td>
+                        <div>{{ .Id }}</div>
+                    </td>
+                    <td>
+                        <div>{{ .Date }}</div>
+                    </td>
+                    <td>
+                        <div>{{ .From }}</div>
+                    </td>
+                    <td>
+                        <div>{{ .To }}</div>
+                    </td>
+                    <td>
+                        <div id="avg{{ .Id }}">0.00</div>
+                    </td>
+                    <td>
+                        <form action="/exchanges/{{.Id}}/delete" method="POST">
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {{ end }}
+        </tbody>
+    </table>
+    
+</div>
+
+<script>
+
+$( document ).ready(function() {
+
+    // Date default value
+    $('input#Date').val(today);
+
+    // Validate currency before submit
+    var checkCurrency = () => {
+        let valid = true;
+        $("input.currency").each((index, element)=>{
+            let cur = $(element).val();
+            if (cur == '' ) {
+                valid = false;
+                $(element).focus();
+                return valid;
+            }
+        });
+
+        return valid;
+    };
+
+    // Validate currency before submit
+    var checkRate = () => {
+        let valid = true;
+        let rate = $('input#Rate').val();
+
+        if (rate == '' || isNaN(rate) ) {
+            valid = false;
+            $('input#Rate').val('');
+            $('input#Rate').focus();
+        }
+
+        return valid;
+    };
+
+    // Validate before submit
+    $('form#new-currency').submit(()=>{
+        if (!checkCurrency() || !checkRate() ) {
+            return false;
+        }
+        return true;
+    });
+
+    // Count pairs
+    $("tr.pairs").each((index, element)=>{
+        let line = $(element);
+        $.get( "/api/exchanges/pairlast7days/"+line.data('from')+"/"+line.data('to'), function( data ) {
+            let rt = 0
+            for (let x=0; x< data.Value.length; x++) {
+                rt += data.Value[x].Rate;
+            };
+
+            $( "div#"+line.data('avg') ).html( (rt/7));
+        });
+    })
+
+});
+
+</script>
+
+{{template "footer.html" .}}

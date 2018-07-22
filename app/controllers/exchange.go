@@ -14,9 +14,7 @@ type Exchange struct {
 	*revel.Controller
 }
 
-/**
- * Index
- */
+// Index
 func (c Exchange) Index() revel.Result {
 	exchanges := []models.Exchange{}
 
@@ -28,12 +26,10 @@ func (c Exchange) Index() revel.Result {
 	return c.Render(exchanges)
 }
 
-/**
- * Create
- */
+// Create
 func (c Exchange) Create() revel.Result {
-	layout := "2000-01-29"
-	tdate, _ := time.Parse(layout, c.Params.Form.Get("Date"))
+	// layout := "2000-01-29"
+	tdate, _ := time.Parse(time.RFC3339, c.Params.Form.Get("Date")+"T00:00:00.000Z") //@TODO: Support multiple a day later
 	trate64, rateErr := strconv.ParseFloat(c.Params.Form.Get("Rate"), 32)
 	if rateErr != nil {
 		fmt.Println("Rate err: ", rateErr)
@@ -51,5 +47,21 @@ func (c Exchange) Create() revel.Result {
 	if ret.Error != nil {
 		return c.RenderError(errors.New("Record Create failure." + ret.Error.Error()))
 	}
-	return c.Redirect("/exchange")
+	return c.Redirect("/exchanges")
+}
+
+// Delete
+func (c Exchange) Delete() revel.Result {
+	id := c.Params.Route.Get("id")
+	exchanges := []models.Exchange{}
+	ret := DB.Delete(&exchanges, id)
+	if ret.Error != nil {
+		return c.RenderError(errors.New("Record Delete failure." + ret.Error.Error()))
+	}
+	return c.Redirect("/exchanges")
+}
+
+// Redirect
+func (c Exchange) RedirectToExchange() revel.Result {
+	return c.Redirect("/exchanges")
 }

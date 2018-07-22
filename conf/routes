@@ -6,15 +6,24 @@
 module:testrunner
 # module:jobs
 
+# Revel routes https://revel.github.io/manual/routing.html
 
-GET     /                                       App.Index
+GET         /                                       App.Index
 
-GET     /exercise                               Exercise.Index
-POST    /exercise                               Exercise.Create
-POST    /exercise/:id/delete                    Exercise.Delete
+GET         /exchanges                              Exchange.Index
+POST        /exchanges                              Exchange.Create
+POST        /exchanges/:id/delete                   Exchange.Delete
+
+# APIs
+GET         /api/exchanges/pairlast7days/:from/:to  ApiExchange.PairLast7Days
+GET         /api/exchanges                          ApiExchange.Index
+GET         /api/exchanges/:id                      ApiExchange.View
+POST        /api/exchanges                          ApiExchange.Create
+PUT         /api/exchanges/:id/update               ApiExchange.Update
+DELETE      /api/exchanges/:id/delete               ApiExchange.Delete
 
 # Ignore favicon requests
-GET     /favicon.ico                            404
+GET         /favicon.ico                            404
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/*filepath                       Static.Serve("public")
