@@ -1,3 +1,33 @@
+# Minimum Requirement
+- Docker version 18.03.1-ce, build
+- docker-compose version 1.19.0
+- docker-py version: 2.7.0
+- CPython version: 2.7.13
+- GCC
+
+## Setup
+- git clone git@github.com:yoesoff/Foreign-Currency-BE-Exercise.git
+- docker-compose up
+- open http://localhost:9000/exchanges on your browser
+
+## Available APIs
+- List of exchange http://localhost:9000/api/exchanges [get]
+- Delete item http://localhost:9000/api/exchanges/:id/delete [delete]
+- Create item http://localhost:9000/api/exchanges [post]
+- Update item http://localhost:9000/api/exchanges/21/update [put]
+- FYI, Both Create and Update are using normal form-data
+
+## Simple GUI/Explorer to Browse your Data
+- open http://localhost:9000/exchanges on your browser
+
+# Used Programming Techologies (Inside container)
+- go version go1.10.3 linux/amd64 
+- Revel Framework v0.19.0 (2018-02-06)
+- Gorm ORM for Go
+
+# Snapshot and Images
+- https://drive.google.com/drive/folders/1kzsCh5BKZHvjVVYlfANwdfWuCysaDG88?usp=sharing
+
 ## microcontainer based on Alpine with working init process and glibc
 [![](https://images.microbadger.com/badges/image/nimmis/alpine-glibc.svg)](https://microbadger.com/images/nimmis/alpine-glibc "Get your own image badge on microbadger.com")
 
