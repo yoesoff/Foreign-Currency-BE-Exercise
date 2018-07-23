@@ -32,7 +32,7 @@
 
 
 
-# Welcome to Revel
+# Go Revel Basic Information
 
 A high-productivity web framework for the [Go language](http://www.golang.org/).
 
